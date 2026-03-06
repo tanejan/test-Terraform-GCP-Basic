@@ -13,7 +13,7 @@ resource "google_compute_subnetwork" "case_study_subnet" {
 
 resource "google_compute_firewall" "http" {
   name    = "allow-http"
-  network = google_compute_network.case_study_vpc_network
+  network = google_compute_network.case_study_vpc_network.id
 
   allow {
     protocol = "tcp"
