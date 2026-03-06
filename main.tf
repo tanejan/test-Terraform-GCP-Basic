@@ -1,4 +1,4 @@
-resource "google_compute_network" "case-study-vpc-network" {
+resource "google_compute_network" "case_study_vpc_network" {
   project                                   = "neeraj"
   name                                      = "case-study-vpc-network"
   auto_create_subnetworks                   = false
