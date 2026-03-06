@@ -1,5 +1,5 @@
 resource "google_compute_network" "case_study_vpc_network" {
-  project                                   = "neeraj"
+  project                                   = "neeraj-487004"
   name                                      = "case-study-vpc-network"
   auto_create_subnetworks                   = false
 }
