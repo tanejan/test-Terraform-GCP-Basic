@@ -8,7 +8,7 @@ resource "google_compute_subnetwork" "case_study_subnet" {
   name          = "case-study-subnet"
   ip_cidr_range = "10.2.0.0/16"
   region        = "us-central1"
-  network       = google_compute_network.case-study-vpc-network.id
+  network       = google_compute_network.case_study_vpc_network.id
 }
 
 resource "google_compute_instance" "case_study_instance3" {
