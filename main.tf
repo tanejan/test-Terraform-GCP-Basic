@@ -11,6 +11,19 @@ resource "google_compute_subnetwork" "case_study_subnet" {
   network       = google_compute_network.case_study_vpc_network.id
 }
 
+resource "google_compute_firewall" "http" {
+  name    = "allow-http"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  target_tags = ["web"]
+}
 resource "google_compute_instance" "case_study_instance3" {
   name         = "case-study-instance3"
   machine_type = "e2-medium"
@@ -24,7 +37,7 @@ resource "google_compute_instance" "case_study_instance3" {
     subnetwork = google_compute_subnetwork.case_study_subnet.id
     access_config {}
   }
-
+  tags = ["web"]
   labels = {
     environment = var.environment
     owner       = var.owner
