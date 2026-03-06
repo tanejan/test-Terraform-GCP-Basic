@@ -1,11 +1,11 @@
 output "vpc_name" {
-  value = google_compute_network.case-study-vpc-network.name
+  value = google_compute_network.case_study_vpc_network.name
 }
 
 output "subnet_name" {
-  value = google_compute_subnetwork.case-study-subnet.name
+  value = google_compute_subnetwork.case_study_subnet.name
 }
 
 output "vm_name" {
-  value = google_compute_instance.case-study-instance3.name
+  value = google_compute_instance.case_study_instance3.name
 }
