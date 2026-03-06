@@ -7,6 +7,6 @@ variable "common_tags" {
   default = {
     environment = "dev"
     managed_by  = "terraform"
-    owner       = "platform-team"
+    owner       = "training-team"
   }
 }
