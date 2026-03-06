@@ -1,6 +1,7 @@
 variable "project_id" { type = string }
 variable "region"     { default = "us-central1" }
 variable "zone"       { default = "us-central1-a" }
+vairable "environment" {default = "dev"}
 
 variable "common_tags" {
   type = map(string)
