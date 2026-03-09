@@ -43,8 +43,19 @@ resource "google_compute_instance" "case_study_instance3" {
     owner       = var.owner
     managedby   = "terraform"
   }
+# UPDATED STARTUP SCRIPT
   metadata_startup_script = <<-EOT
     #!/bin/bash
+    # Update package list and install Apache
+    apt-get update
+    apt-get install -y apache2
+    
+    # Ensure Apache starts and stays running
+    systemctl start apache2
+    systemctl enable apache2
+    
+    # Create the custom index file
     echo "<h1>Provisioned via Terraform</h1>" > /var/www/html/index.html
   EOT
+}
 }
