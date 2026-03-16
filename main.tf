@@ -45,7 +45,6 @@ resource "google_compute_instance" "capstone_study_instance3" {
 
   network_interface {
     subnetwork = google_compute_subnetwork.capstone_study_subnet.id
-    access_config {}
   }
   tags = ["web"]
   labels = {
@@ -92,14 +91,25 @@ resource "google_compute_instance" "bastion" {
       image = "debian-cloud/debian-11"
     }
   }
-
+  tags = ["bastion"]
   network_interface {
     subnetwork = google_compute_subnetwork.capstone_study_public_subnet.id
     access_config {}
   }
 }
 
+resource "google_compute_firewall" "ssh" {
+  name    = "allow-ssh"
+  network = google_compute_network.capstone_study_vpc_network.id
 
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["bastion"]
+}
 resource "google_billing_budget" "monthly_budget" {
   billing_account = "01FADD-6DDB95-F02035"
 
