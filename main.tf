@@ -92,7 +92,7 @@ resource "google_compute_instance" "bastion" {
 
 
 resource "google_billing_budget" "monthly_budget" {
-  billing_account = "sairam_account_gcp"
+  billing_account = "01FADD-6DDB95-F02035"
 
   amount {
     specified_amount {
