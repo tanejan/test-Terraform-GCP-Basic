@@ -3,7 +3,7 @@ output "vpc_name" {
 }
 
 output "private_subnet_name" {
-  value = google_compute_subnetwork.capstone_study_private_subnet.name
+  value = google_compute_subnetwork.capstone_study_subnet.name
 }
 output "public_subnet_name" {
   value = google_compute_subnetwork.capstone_study_public_subnet.name
