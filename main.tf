@@ -110,17 +110,3 @@ resource "google_compute_firewall" "ssh" {
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["bastion"]
 }
-resource "google_billing_budget" "monthly_budget" {
-  billing_account = "01FADD-6DDB95-F02035"
-
-  amount {
-    specified_amount {
-      currency_code = "GBP"
-      units         = "100"
-    }
-  }
-
-  threshold_rules {
-    threshold_percent = 0.9
-  }
-}
