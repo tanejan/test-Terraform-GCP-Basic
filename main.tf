@@ -34,7 +34,7 @@ resource "google_compute_instance" "capstone_study_instance3" {
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.case_study_subnet.id
+    subnetwork = google_compute_subnetwork.capstone_study_subnet.id
     access_config {}
   }
   tags = ["web"]
