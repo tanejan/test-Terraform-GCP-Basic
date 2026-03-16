@@ -6,7 +6,7 @@ resource "google_compute_network" "capstone_study_vpc_network" {
 
 resource "google_compute_subnetwork" "capstone_study_subnet" {
   name          = "capstone-study-subnet"
-  ip_cidr_range = "10.2.0.0/16"
+  ip_cidr_range = "10.4.0.0/16"
   region        = "us-central1"
   network       = google_compute_network.capstone_study_vpc_network.id
 }
