@@ -89,3 +89,19 @@ resource "google_compute_instance" "bastion" {
     access_config {}
   }
 }
+
+
+resource "google_billing_budget" "monthly_budget" {
+  billing_account = "sairam_account_gcp"
+
+  amount {
+    specified_amount {
+      currency_code = "GBP"
+      units         = "100"
+    }
+  }
+
+  threshold_rules {
+    threshold_percent = 0.9
+  }
+}
