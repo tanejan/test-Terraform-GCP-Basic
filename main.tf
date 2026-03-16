@@ -73,3 +73,19 @@ resource "google_sql_database_instance" "cloussql" {
     tier = "db-f1-micro"
   }
 }
+resource "google_compute_instance" "bastion" {
+  name         = "bastion-vm"
+  machine_type = "e2-micro"
+  zone         = "us-central1-a"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-11"
+    }
+  }
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.capstone_study_public_subnet.id
+    access_config {}
+  }
+}
