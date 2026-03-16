@@ -4,10 +4,17 @@ resource "google_compute_network" "capstone_study_vpc_network" {
   auto_create_subnetworks                   = false
 }
 
-resource "google_compute_subnetwork" "capstone_study_subnet" {
-  name          = "capstone-study-subnet"
+resource "google_compute_subnetwork" "capstone_study_private_subnet" {
+  name          = "capstone-study-private-subnet"
   ip_cidr_range = "10.4.0.0/16"
   region        = "us-central1"
+  network       = google_compute_network.capstone_study_vpc_network.id
+}
+
+resource "google_compute_subnetwork" "capstone_study_private_subnet" {
+  name          = "capstone-study-public-subnet"
+  ip_cidr_range = "10.5.0.0/16"
+  region        = us-central1
   network       = google_compute_network.capstone_study_vpc_network.id
 }
 
