@@ -2,8 +2,11 @@ output "vpc_name" {
   value = google_compute_network.capstone_study_vpc_network.name
 }
 
-output "subnet_name" {
-  value = google_compute_subnetwork.capstone_study_subnet.name
+output "private_subnet_name" {
+  value = google_compute_subnetwork.capstone_study_private_subnet.name
+}
+output "public_subnet_name" {
+  value = google_compute_subnetwork.capstone_study_public_subnet.name
 }
 
 output "vm_name" {
