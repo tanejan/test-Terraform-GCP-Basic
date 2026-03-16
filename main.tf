@@ -21,19 +21,6 @@ resource "google_compute_subnetwork" "capstone_study_public_subnet" {
   network       = google_compute_network.capstone_study_vpc_network.id
 }
 
-resource "google_compute_firewall" "http" {
-  name    = "allow-http"
-  network = google_compute_network.capstone_study_vpc_network.id
-
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
-  }
-
-  source_ranges = ["0.0.0.0/0"]
-
-  target_tags = ["web"]
-}
 resource "google_compute_instance" "capstone_study_instance3" {
   name         = "capstone-study-instance3"
   machine_type = "e2-medium"
@@ -46,7 +33,7 @@ resource "google_compute_instance" "capstone_study_instance3" {
   network_interface {
     subnetwork = google_compute_subnetwork.capstone_study_subnet.id
   }
-  tags = ["web"]
+  tags = ["app"]
   labels = {
     environment = var.environment
     owner       = var.owner
@@ -66,6 +53,21 @@ resource "google_compute_instance" "capstone_study_instance3" {
     echo "<h1>Provisioned via Terraform</h1>" > /var/www/html/index.html
   EOT
 
+}
+resource "google_compute_firewall" "ssh_from_bastion" {
+  name    = "allow-ssh-from-bastion"
+  network = google_compute_network.capstone_study_vpc_network.id
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  # Restrict to Bastion subnet
+  source_ranges = [google_compute_subnetwork.capstone_study_public_subnet.ip_cidr_range]
+
+  # Apply only to App VMs
+  target_tags = ["app"]
 }
 resource "google_sql_database_instance" "cloussql" {
   name             = "master-instance"
