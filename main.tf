@@ -58,3 +58,12 @@ resource "google_compute_instance" "capstone_study_instance3" {
   EOT
 
 }
+resource "google_sql_database_instance" "cloussql" {
+  name             = "master-instance"
+  database_version = "POSTGRES_11"
+  region           = "us-central1"
+
+  settings {
+    tier = "db-f1-micro"
+  }
+}
