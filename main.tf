@@ -1,19 +1,19 @@
-resource "google_compute_network" "case_study_vpc_network" {
+resource "google_compute_network" "capstone_study_vpc_network" {
   project                                   = "neeraj-487004"
-  name                                      = "case-study-vpc-network"
+  name                                      = "capstone-study-vpc-network"
   auto_create_subnetworks                   = false
 }
 
-resource "google_compute_subnetwork" "case_study_subnet" {
-  name          = "case-study-subnet"
+resource "google_compute_subnetwork" "capstone_study_subnet" {
+  name          = "capstone-study-subnet"
   ip_cidr_range = "10.2.0.0/16"
   region        = "us-central1"
-  network       = google_compute_network.case_study_vpc_network.id
+  network       = google_compute_network.capstone_study_vpc_network.id
 }
 
 resource "google_compute_firewall" "http" {
   name    = "allow-http"
-  network = google_compute_network.case_study_vpc_network.id
+  network = google_compute_network.capstone_study_vpc_network.id
 
   allow {
     protocol = "tcp"
@@ -24,8 +24,8 @@ resource "google_compute_firewall" "http" {
 
   target_tags = ["web"]
 }
-resource "google_compute_instance" "case_study_instance3" {
-  name         = "case-study-instance3"
+resource "google_compute_instance" "capstone_study_instance3" {
+  name         = "capstone-study-instance3"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
 
