@@ -1,3 +1,7 @@
+provider "google" {
+  project = "neeraj-487004"
+  region  = "us-central1"
+}
 resource "google_compute_network" "capstone_study_vpc_network" {
   project                                   = "neeraj-487004"
   name                                      = "capstone-study-vpc-network"
@@ -71,6 +75,11 @@ resource "google_sql_database_instance" "cloussql" {
 
   settings {
     tier = "db-f1-micro"
+
+    ip_configuration {
+      ipv4_enabled = false
+      private_network = google_compute_network.capstone_study_vpc_network.id
+    }
   }
 }
 resource "google_compute_instance" "bastion" {
