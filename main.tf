@@ -76,10 +76,12 @@ resource "google_sql_database_instance" "cloussql" {
     tier = "db-f1-micro"
 
     ip_configuration {
-      ipv4_enabled = false
+      ipv4_enabled    = false
       private_network = google_compute_network.capstone_study_vpc_network.id
     }
   }
+
+  depends_on = [google_service_networking_connection.private_vpc_connection]
 }
 resource "google_compute_instance" "bastion" {
   name         = "bastion-vm"
@@ -109,4 +111,20 @@ resource "google_compute_firewall" "ssh" {
 
   source_ranges = ["0.0.0.0/0"]
   target_tags   = ["bastion"]
+}
+
+resource "google_project_service" "service_networking" {
+  service = "servicenetworking.googleapis.com"
+}
+resource "google_compute_global_address" "private_ip_range" {
+  name          = "cloudsql-private-range"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.capstone_study_vpc_network.id
+}
+resource "google_service_networking_connection" "private_vpc_connection" {
+  network                 = google_compute_network.capstone_study_vpc_network.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_ip_range.name]
 }
