@@ -54,6 +54,15 @@ resource "google_compute_instance" "capstone_study_instance3" {
   EOT
 
 }
+resource "google_service_account" "app_sa" {
+  account_id   = "app-sa"
+  display_name = "Service Account to access cloudsql"
+}
+
+resource "google_project_iam_member" "app_sql_access" {
+  role   = "roles/cloudsql.client"
+  member = "serviceAccount:${google_service_account.app_sa.email}"
+}
 resource "google_compute_firewall" "ssh_from_bastion" {
   name    = "allow-ssh-from-bastion"
   network = google_compute_network.capstone_study_vpc_network.id
