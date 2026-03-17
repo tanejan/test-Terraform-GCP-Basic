@@ -95,6 +95,15 @@ resource "google_sql_database_instance" "cloussql" {
 
   depends_on = [google_service_networking_connection.private_vpc_connection]
 }
+resource "google_service_account" "bastion_sa" {
+  account_id   = "bastion-host-sa"
+  display_name = "Service Account for Bastion Host"
+}
+resource "google_project_iam_member" "bastion_os_login" {
+  project = "neeraj-487004"
+  role    = "roles/compute.osLogin"
+  member  = "serviceAccount:${google_service_account.bastion_sa.email}"
+}
 resource "google_compute_instance" "bastion" {
   name         = "bastion-vm"
   machine_type = "e2-micro"
@@ -110,6 +119,10 @@ resource "google_compute_instance" "bastion" {
     subnetwork = google_compute_subnetwork.capstone_study_public_subnet.id
     access_config {}
   }
+  service_account {
+      email  = google_service_account.bastion_sa.email
+      scopes = ["cloud-platform"]
+    }
 }
 
 resource "google_compute_firewall" "ssh" {
