@@ -60,8 +60,8 @@ resource "google_service_account" "app_sa" {
 }
 
 resource "google_project_iam_member" "app_sql_access" {
+  project = "neeraj-487004"  
   role   = "roles/cloudsql.client"
-  project = "neeraj-487004"
   member = "serviceAccount:${google_service_account.app_sa.email}"
 }
 resource "google_compute_firewall" "ssh_from_bastion" {
